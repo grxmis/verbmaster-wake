@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 // URL της κύριας εφαρμογής Render
 const URL_TO_WAKE = "https://verbmaster.onrender.com";
 
@@ -14,6 +12,7 @@ export const config = {
 
 export default async function handler(req) {
   try {
+    // Χρησιμοποιούμε native fetch
     const response = await fetch(URL_TO_WAKE);
     if (response.ok) {
       console.log("Wake-up successful!");
