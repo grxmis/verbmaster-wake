@@ -12,23 +12,15 @@ export const config = {
 
 export default async function handler(req) {
   try {
-    // Χρησιμοποιούμε native fetch
-    const response = await fetch(URL_TO_WAKE);
-    if (response.ok) {
-      console.log("Wake-up successful!");
-      return new Response(JSON.stringify({ message: "Wake-up successful!" }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" }
-      });
-    } else {
-      console.log(`Wake-up failed: ${response.status}`);
-      return new Response(JSON.stringify({ message: "Wake-up failed", status: response.status }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
+    // Στέλνουμε το request χωρίς να περιμένουμε την απάντηση
+    fetch(URL_TO_WAKE).catch(() => {}); 
+
+    // Επιστρέφουμε αμέσως επιβεβαίωση
+    return new Response(JSON.stringify({ message: "Wake-up triggered!" }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" }
+    });
   } catch (error) {
-    console.log(`Error: ${error.message}`);
     return new Response(JSON.stringify({ message: "Error occurred", error: error.message }), {
       status: 500,
       headers: { "Content-Type": "application/json" }
